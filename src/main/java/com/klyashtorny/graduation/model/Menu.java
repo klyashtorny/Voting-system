@@ -1,10 +1,12 @@
 package com.klyashtorny.graduation.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
+@Entity
+@Table(name = "menu")
 public class Menu extends AbstractNamedEntity {
-
-    private int price;
 
     private Date registered = new Date();
 
@@ -13,14 +15,6 @@ public class Menu extends AbstractNamedEntity {
 
     public Menu(Integer id, String name, int price) {
         super(id, name);
-        this.price = price;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
 }
