@@ -17,7 +17,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
 
     Restaurant getByIdAndUserId(int id, int userId);
 
-    List<Restaurant> getByUserIdOrderByName(int id);
+    List<Restaurant> getByUserIdOrderByName(int userId);
 
     List<Restaurant> findAll(Sort sort);
 

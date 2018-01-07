@@ -1,11 +1,11 @@
 package com.klyashtorny.graduation.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Vote extends AbstractBaseEntity {
 
     private boolean enabled;
 
-    private Date registered = new Date();
+    private LocalDate registered;
 
 }

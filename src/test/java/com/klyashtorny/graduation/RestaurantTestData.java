@@ -25,7 +25,7 @@ public class RestaurantTestData {
     public static final List<Restaurant> RESTAURANTS_ADMIN = Arrays.asList(RESTAURANT_1, RESTAURANT_2);
 
     public static Restaurant getCreated() {
-        return new Restaurant(RESTAURANT_ID + 4, "New Restaurant", "Новый адрес" );
+        return new Restaurant(RESTAURANT_ID + 13, "New Restaurant", "Новый адрес" );
     }
 
     public static Restaurant getUpdated() {
