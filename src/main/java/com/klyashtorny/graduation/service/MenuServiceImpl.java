@@ -3,10 +3,9 @@ package com.klyashtorny.graduation.service;
 import com.klyashtorny.graduation.model.Menu;
 import com.klyashtorny.graduation.repository.MenuRepository;
 import com.klyashtorny.graduation.repository.RestaurantRepository;
-import com.klyashtorny.graduation.util.DateTimeUtil;
 import com.klyashtorny.graduation.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
@@ -14,7 +13,7 @@ import java.util.List;
 
 import static com.klyashtorny.graduation.util.ValidationUtil.*;
 
-@Repository
+@Service
 public class MenuServiceImpl implements MenuService {
 
     private final MenuRepository repository;

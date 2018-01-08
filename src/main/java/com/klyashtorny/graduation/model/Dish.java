@@ -52,7 +52,7 @@ public class Dish extends AbstractNamedEntity {
         return "Dish{" +
                 "id=" + id +
                 ", name='" + name +
-                "price=" + price +
+                ", price=" + price +
                 '}';
     }
 }

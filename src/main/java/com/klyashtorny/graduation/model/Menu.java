@@ -23,6 +23,7 @@ public class Menu extends AbstractNamedEntity {
     private Restaurant restaurant;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
+    @OrderBy("name asc")
     protected List<Dish> dishes;
 
     public Menu() {

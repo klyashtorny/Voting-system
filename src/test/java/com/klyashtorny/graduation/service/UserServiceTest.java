@@ -1,7 +1,9 @@
 package com.klyashtorny.graduation.service;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
 import com.klyashtorny.graduation.model.Role;
 import com.klyashtorny.graduation.model.User;
@@ -18,6 +20,15 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected UserService service;
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @Before
+    public void setUp() throws Exception {
+        cacheManager.getCache("users").clear();
+        jpaUtil.clear2ndLevelHibernateCache();
+    }
 
     @Test
     public void create() throws Exception {

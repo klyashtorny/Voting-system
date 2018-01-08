@@ -31,16 +31,13 @@ import static com.klyashtorny.graduation.util.ValidationUtil.getRootCause;
 abstract public class AbstractServiceTest {
 
     @Autowired
-    private CacheManager cacheManager;
-
-    @Autowired
     protected JpaUtil jpaUtil;
 
     @Before
     public void setUp() throws Exception {
-        cacheManager.getCache("users").clear();
         jpaUtil.clear2ndLevelHibernateCache();
     }
+
     @ClassRule
     public static ExternalResource summary = TimingRules.SUMMARY;
 
