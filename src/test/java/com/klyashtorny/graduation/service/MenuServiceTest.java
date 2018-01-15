@@ -35,7 +35,7 @@ public class MenuServiceTest extends AbstractServiceTest {
 
     @Test
     public void getActualWithDishes() throws Exception {
-        Menu menu = menuService.getActualWithDishes(MENU_ID, RESTAURANT_ID, today());
+        Menu menu = menuService.getActualWithDishes(RESTAURANT_ID, today());
         assertMatch(menu, MENU_1);
         assertMatch(menu.getDishes(), DISHES_ASTORIA);
     }
@@ -44,7 +44,7 @@ public class MenuServiceTest extends AbstractServiceTest {
     @Test
     public void getActualWithDishesNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        menuService.getActualWithDishes(MENU_2.getId(), RESTAURANT_ID, today());
+        menuService.getActualWithDishes(RESTAURANT_3.getId(), today());
     }
 
     @Test

@@ -13,7 +13,7 @@ import static com.klyashtorny.graduation.model.AbstractBaseEntity.START_SEQ;
 
 public class RestaurantTestData {
 
-    public static final int RESTAURANT_ID = START_SEQ + 2;
+    public static final int RESTAURANT_ID = START_SEQ + 8;
 
 
     public static final Restaurant RESTAURANT_1 =  new Restaurant(RESTAURANT_ID, "Astoria", "Набережная фонтанки" );
@@ -22,10 +22,10 @@ public class RestaurantTestData {
     public static final Restaurant RESTAURANT_4 =  new Restaurant(RESTAURANT_ID + 3,  "VasilyOstrovsky", "Васильевский остров");
 
     public static final List<Restaurant> RESTAURANTS = Arrays.asList(RESTAURANT_1, RESTAURANT_2 ,RESTAURANT_3, RESTAURANT_4);
-    public static final List<Restaurant> RESTAURANTS_ADMIN = Arrays.asList(RESTAURANT_1, RESTAURANT_2);
+    public static final List<Restaurant> RESTAURANTS_USER_2 = Arrays.asList(RESTAURANT_1, RESTAURANT_2);
 
     public static Restaurant getCreated() {
-        return new Restaurant(RESTAURANT_ID + 13, "New Restaurant", "Новый адрес" );
+        return new Restaurant(RESTAURANT_ID + 20, "New Restaurant", "Новый адрес" );
     }
 
     public static Restaurant getUpdated() {

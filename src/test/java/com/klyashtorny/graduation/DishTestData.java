@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DishTestData {
 
-    public static final int DISH_ID = START_SEQ + 9;
+    public static final int DISH_ID = START_SEQ + 15;
     
     public static final Dish DISH_1 =  new Dish(DISH_ID, "Fresh", 100);
     public static final Dish DISH_2 = new Dish(DISH_ID + 2, "Main of the day", 500);
@@ -24,7 +24,7 @@ public class DishTestData {
     public static final List<Dish> DISHES_GOLDFISH = Arrays.asList(DISH_4, DISH_5, DISH_6);
 
     public static Dish getCreated() {
-        return new Dish(DISH_ID + 6, "New Dish", 100);
+        return new Dish(DISH_ID + 13, "New Dish", 100);
     }
 
     public static Dish getUpdated() {

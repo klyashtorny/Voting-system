@@ -14,7 +14,7 @@ public interface MenuService {
 
     Menu get(int id, int restaurantId) throws NotFoundException;
 
-    Menu getActualWithDishes(int id, int restaurantId, LocalDate date) throws NotFoundException;
+    Menu getActualWithDishes(int restaurantId, LocalDate date) throws NotFoundException;
 
     Menu update(Menu menu, int restaurantId) throws NotFoundException;
 

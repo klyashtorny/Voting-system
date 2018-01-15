@@ -49,8 +49,8 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu getActualWithDishes(int id, int restaurantId, LocalDate date) throws NotFoundException {
-        return checkNotFoundWithId(repository.getWithDishes(id, restaurantId, date).orElse(null), id);
+    public Menu getActualWithDishes(int restaurantId, LocalDate date) throws NotFoundException {
+        return checkNotFoundWithId(repository.getWithDishes(restaurantId, date).orElse(null), restaurantId);
     }
 
     @Override

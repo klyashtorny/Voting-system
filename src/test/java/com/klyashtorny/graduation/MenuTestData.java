@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class MenuTestData {
 
-    public static final int MENU_ID = START_SEQ + 6;
+    public static final int MENU_ID = START_SEQ + 12;
 
 
     public static final Menu MENU_1 =  new Menu(MENU_ID, today(),"Launch menu Astoria");
@@ -21,7 +21,7 @@ public class MenuTestData {
 
 
     public static Menu getCreated() {
-        return new Menu(MENU_ID + 9, today(),"New Menu");
+        return new Menu(MENU_ID + 16, today(),"New Menu");
     }
 
     public static Menu getUpdated() {

@@ -4,6 +4,7 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.util.CollectionUtils;
 import org.hibernate.annotations.Cache;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -36,7 +37,7 @@ public class User extends AbstractNamedEntity {
 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_roles",joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
     @BatchSize(size = 200)
@@ -44,6 +45,7 @@ public class User extends AbstractNamedEntity {
 
     public User() {
     }
+
     public User(User u) {
         this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles());
     }
@@ -114,7 +116,6 @@ public class User extends AbstractNamedEntity {
         return "User{" +
                 "id=" + id +
                 ", email=" + email +
-                ", name=" + name +
                 ", name=" + name +
                 ", enabled=" + enabled +
                 ", roles=" + roles +

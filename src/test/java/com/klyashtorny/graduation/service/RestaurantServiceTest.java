@@ -17,8 +17,8 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     public void delete() throws Exception {
-        service.delete(RESTAURANT_ID, ADMIN_ID);
-        assertMatch(service.getAllByUser(ADMIN_ID), RESTAURANT_2);
+        service.delete(RESTAURANT_ID, USER_2.getId());
+        assertMatch(service.getAllByUser(USER_2.getId()), RESTAURANT_2);
     }
 
     @Test
@@ -37,8 +37,8 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     public void update() throws Exception {
         Restaurant updated = getUpdated();
-        service.update(updated, ADMIN_ID);
-        assertMatch(service.get(RESTAURANT_ID, ADMIN_ID), updated);
+        service.update(updated, USER_2.getId());
+        assertMatch(service.get(RESTAURANT_ID, USER_2.getId()), updated);
     }
 
     @Test
@@ -50,8 +50,8 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     public void get() throws Exception {
-        Restaurant restaurant = service.get(RESTAURANT_ID + 1, ADMIN_ID);
-        assertMatch(restaurant, RESTAURANT_2);
+        Restaurant restaurant = service.get(RESTAURANT_ID, USER_2.getId());
+        assertMatch(restaurant, RESTAURANT_1);
     }
 
     @Test
@@ -62,8 +62,8 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     public void testGetAllByUser() throws Exception {
-        List<Restaurant> all = service.getAllByUser(ADMIN_ID);
-        assertMatch(all, RESTAURANTS_ADMIN);
+        List<Restaurant> all = service.getAllByUser(USER_2.getId());
+        assertMatch(all, RESTAURANTS_USER_2);
     }
 
     @Test
