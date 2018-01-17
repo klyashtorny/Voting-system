@@ -76,6 +76,8 @@
     <tomcat.version>8.5.24</tomcat.version>
     <spring.version>5.0.1.RELEASE</spring.version>
     <spring-data-jpa.version>2.0.2.RELEASE</spring-data-jpa.version>
+    <spring-security.version>5.0.0.RELEASE</spring-security.version>
+    <jackson-json.version>2.9.3</jackson-json.version>
     <!-- Logging -->
     <logback.version>1.2.3</logback.version>
     <slf4j.version>1.7.25</slf4j.version>
@@ -135,6 +137,18 @@
       <version>${spring-data-jpa.version}</version>
     </dependency>
 
+    <!--security-->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+      <version>${spring-security.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+      <version>${spring-security.version}</version>
+    </dependency>
+
     <!--- ORM -->
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -189,6 +203,23 @@
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
       <version>1.2</version>
+    </dependency>
+
+    <!--JSON-->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson-json.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-hibernate5</artifactId>
+      <version>${jackson-json.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>${jackson-json.version}</version>
     </dependency>
 
     <!--Test-->

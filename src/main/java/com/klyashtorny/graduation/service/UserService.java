@@ -2,6 +2,7 @@ package com.klyashtorny.graduation.service;
 
 
 import com.klyashtorny.graduation.model.User;
+import com.klyashtorny.graduation.to.UserTo;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public interface UserService  {
     User getByEmail(String email);
 
     void update(User user);
+
+    void update(UserTo user);
 
     List<User> getAll();
 

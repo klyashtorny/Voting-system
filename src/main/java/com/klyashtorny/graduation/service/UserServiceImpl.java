@@ -2,11 +2,14 @@ package com.klyashtorny.graduation.service;
 
 import com.klyashtorny.graduation.model.User;
 import com.klyashtorny.graduation.repository.UserRepository;
+import com.klyashtorny.graduation.to.UserTo;
+import com.klyashtorny.graduation.util.UserUtil;
 import com.klyashtorny.graduation.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -59,6 +62,14 @@ public class UserServiceImpl implements UserService {
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
         checkNotFoundWithId(repository.save(user), user.getId());
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    @Override
+    public void update(UserTo userTo) {
+        User user = get(userTo.getId());
+        repository.save(UserUtil.updateFromTo(user, userTo));
     }
 
 }
