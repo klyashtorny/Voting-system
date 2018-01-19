@@ -47,7 +47,7 @@ CREATE TABLE menu
   name          VARCHAR(255) NOT NULL,
   FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX menu_unique_restaurant_id_registered_idx ON menu (restaurant_id, registered);
+CREATE UNIQUE INDEX menu_unique_restaurant_id_registered_idx ON menu (name, registered);
 
 CREATE TABLE dish
 (
@@ -67,4 +67,3 @@ CREATE TABLE vote
   FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT (id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES USERS (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX vote_user_id_restaurant_id_voteTime_idx ON VOTE (user_id, restaurant_id, voteTime);

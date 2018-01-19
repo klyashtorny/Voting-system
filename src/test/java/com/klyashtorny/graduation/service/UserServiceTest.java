@@ -35,7 +35,7 @@ public class UserServiceTest extends AbstractServiceTest {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.ROLE_USER));
         User created = service.create(newUser);
         newUser.setId(created.getId());
-        assertMatch(service.getAll(), ADMIN, newUser, USER_1, USER_2, USER_3, USER_4, USER_5, USER_6,  USER_7);
+        assertMatch(service.getAll(), ADMIN_1, ADMIN_2, newUser, USER_1, USER_2, USER_3, USER_4, USER_5, USER_6);
     }
 
     @Test(expected = DataAccessException.class)
@@ -46,7 +46,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     public void delete() throws Exception {
         service.delete(USER_ID);
-        assertMatch(service.getAll(), ADMIN, USER_2, USER_3, USER_4, USER_5, USER_6,  USER_7);
+        assertMatch(service.getAll(), ADMIN_2, USER_1, USER_2, USER_3, USER_4, USER_5, USER_6);
     }
 
     @Test(expected = NotFoundException.class)
@@ -56,8 +56,8 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void get() throws Exception {
-        User user = service.get(USER_ID);
-        assertMatch(user, USER_1);
+        User user = service.get(ADMIN_1.getId());
+        assertMatch(user, ADMIN_1);
     }
 
     @Test(expected = NotFoundException.class)
@@ -76,7 +76,7 @@ public class UserServiceTest extends AbstractServiceTest {
         User updated = new User(USER_1);
         updated.setName("UpdatedName");
         service.update(updated);
-        assertMatch(service.get(USER_ID), updated);
+        assertMatch(service.get(USER_1.getId()), updated);
     }
 
     @Test
@@ -87,10 +87,8 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void testValidation() throws Exception {
-        validateRootCause(() -> service.create(new User(null, " ", "mail@yandex.ru", "password", Role.ROLE_USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "", "invalid@yandex.ru", "password", Role.ROLE_USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "  ", "password", Role.ROLE_USER)), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "  ", Role.ROLE_USER)), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new User(null, " ", "mail@yandex.ru", "password", true, new Date(),Collections.emptySet())), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "  ", true, new Date(), Collections.emptySet())), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User", "invalid@yandex.ru", "",  Role.ROLE_USER)), ConstraintViolationException.class);
     }
 }

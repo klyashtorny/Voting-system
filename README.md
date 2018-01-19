@@ -18,13 +18,78 @@ CURL:
 
 USERS
 GetAll
-curl -s http://localhost:8080/topjava-graduation/rest/admin/users --user admin@gmail.com:admin
+curl -s http://localhost:8080/topjava-graduation/rest/admin/users --user admin1@gmail.com:admin1
+Get
+curl -s http://localhost:8080/topjava-graduation/rest/admin/users/100001 --user admin1@gmail.com:admin1
+Post
+curl -s -X POST -d '{"name":"New User","email":"user10@yandex.ru","password":"1234567"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/topjava-graduation/rest/admin/users --user admin1@gmail.com:admin1
+Delete
+curl -s -X DELETE http://localhost:8080/topjava-graduation/rest/admin/users/100002 --user admin1@gmail.com:admin1
+
+VOTE
+GetAll
+curl -s http://localhost:8080/topjava-graduation/rest/restaurants --user user1@yandex.ru:password1
+GetByRestaurants
+curl -s http://localhost:8080/topjava-graduation/rest/restaurants/100008/votes --user admin1@gmail.com:admin1
+Post
+curl -s -X POST -d -H http://localhost:8080/topjava-graduation/rest/restaurants/100009/vote --user user4@yandex.ru:password4
+curl -s -X POST -d -H http://localhost:8080/topjava-graduation/rest/restaurants/100009/vote --user user5@yandex.ru:password5
+curl -s -X POST -d -H http://localhost:8080/topjava-graduation/rest/restaurants/100009/vote --user user6@yandex.ru:password6
+curl -s -X POST -d -H http://localhost:8080/topjava-graduation/rest/restaurants/100009/vote --user user7@yandex.ru:password7
+
+RESTAURANT
+
+GetAll
+curl -s http://localhost:8080/topjava-graduation/rest/profile/restaurants --user user1@yandex.ru:password1
+
+GetAllByAdmin
+curl -s http://localhost:8080/topjava-graduation/rest/profile/restaurants/admin/100000/all --user admin1@gmail.com:admin1
+curl -s http://localhost:8080/topjava-graduation/rest/profile/restaurants/admin/100001/all --user admin2@gmail.com:admin2
+
+Create
+curl -s -X POST -d '{"name": "New Restaurant","address":"New Address"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/topjava-graduation/rest/profile/restaurants --user admin2@gmail.com:admin2
+
+Update
+curl -s -X PUT -d '{"name": "Update Restaurant","address":"Update Address"}' -H 'Content-Type: application/json'  http://localhost:8080/topjava-graduation/rest/profile/restaurants/100008 --user admin1@gmail.com:admin1
+
+Delete
+
+curl -s -X DELETE http://localhost:8080/topjava-graduation/rest/profile/restaurants/100008 --user admin1@gmail.com:admin1
+
+MENU
 
 Get
-curl -s http://localhost:8080/topjava-graduation/rest/admin/users/100001 --user admin@gmail.com:admin
 
-Post
-curl -s -X POST -d '{"name":"New User","email":"user10@yandex.ru","password":"1234567"}' -H 'Content-Type:application
-/json;charset=UTF-8' curl -s http://localhost:8080/topjava-graduation/rest/admin/users --user admin@gmail.com:admin
+curl -s http://localhost:8080/topjava-graduation/rest/profile/restaurants/100009/menu/100014 --user admin2@gmail.com:admin2
+
+GetAllByRestaurant
+curl -s http://localhost:8080/topjava-graduation/rest/profile/restaurants/100008/menus --user admin1@gmail.com:admin1
+
+getActualWithDishes
+curl -s http://localhost:8080/topjava-graduation/rest/profile/restaurants/100008/menu --user user4@yandex.ru:password4
+
+Create
+curl -s -X POST -d '{"registered": "2018-01-19","name":"New Menu"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/topjava-graduation/rest/profile/restaurants/100008/menu --user admin1@gmail.com:admin1
+
+Update
+curl -s -X PUT -d '{"registered": "2018-01-19","name":"Update Menu"}' -H 'Content-Type: application/json'  http://localhost:8080/topjava-graduation/rest/profile/restaurants/100008/menu/100013 --user admin1@gmail.com:admin1
+
 Delete
-curl -s -X DELETE http://localhost:8080/topjava-graduation/rest/admin/users/100002 --user admin@gmail.com:admin
+curl -s -X DELETE http://localhost:8080/topjava-graduation/rest/profile/restaurants/100008/menu/100013 --user admin1@gmail.com:admin1
+
+DISH
+
+Get
+curl -s http://localhost:8080/topjava-graduation/rest/profile/restaurants/menu/100014/dish/100018 --user admin2@gmail.com:admin2
+
+GetAllByMenu
+curl -s http://localhost:8080/topjava-graduation/rest/profile/restaurants/menu/100012/dishes --user admin1@gmail.com:admin1
+
+Create
+curl -s -X POST -d '{"name": "New Dish","price":"150"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/topjava-graduation/rest/profile/restaurants/menu/100012/dish --user admin1@gmail.com:admin1
+
+Update
+curl -s -X PUT -d '{"name": "Update Dish","price":"180"}' -H 'Content-Type: application/json'  http://localhost:8080/topjava-graduation/rest/profile/restaurants/menu/100014/dish/100018 --user admin1@gmail.com:admin1
+
+Delete
+curl -s -X DELETE http://localhost:8080/topjava-graduation/rest/profile/restaurants/menu/100012/dish/100017 --user admin1@gmail.com:admin1

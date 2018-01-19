@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public class DateTimeUtil {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    public static final LocalDateTime TEST_TIME = LocalDateTime.of(2018, 01, 15, 11, 0);
+    public static final LocalDateTime TEST_TIME = LocalDate.now().atTime(11,00);
 
     private static Clock clock = Clock.systemDefaultZone();
 

@@ -44,6 +44,9 @@ abstract public class AbstractServiceTest {
     @Rule
     public Stopwatch stopwatch = TimingRules.STOPWATCH;
 
+    @Autowired
+    protected Environment environment;
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -61,6 +64,5 @@ abstract public class AbstractServiceTest {
             Assert.assertThat(getRootCause(e), instanceOf(exceptionClass));
         }
     }
-    @Autowired
-    protected Environment environment;
+
 }

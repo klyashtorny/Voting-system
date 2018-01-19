@@ -27,8 +27,7 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
     @Transactional
     Menu save(Menu item);
 
-    @EntityGraph(attributePaths = {"dishes"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT m FROM Menu m WHERE m.restaurant.id = ?1 AND m.registered >=?2")
+    @Query("SELECT m FROM Menu m JOIN FETCH m.dishes WHERE m.restaurant.id = ?1 AND m.registered >=?2")
     Optional<Menu> getWithDishes(int restaurantId, LocalDate date);
 
 }

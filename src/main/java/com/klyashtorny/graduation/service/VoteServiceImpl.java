@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.klyashtorny.graduation.util.DateTimeUtil.TEST_TIME;
+import static com.klyashtorny.graduation.util.DateTimeUtil.dateTimeToday;
 import static com.klyashtorny.graduation.util.DateTimeUtil.today;
 import static com.klyashtorny.graduation.util.ValidationUtil.checkNotFoundWithId;
 
@@ -43,15 +44,15 @@ public class VoteServiceImpl implements VoteService {
         Menu menu = menuRepository.getWithDishes(restaurantId, today()).orElse(null);
         if(menu == null) throw new  NotFoundException("Menu is not existing");
         if(menu.getDishes().size()==0) throw new  NotFoundException("Dish list for menu is empty");
-        Vote vote = get(userId, DateTimeUtil.dateTimeToday());
+        Vote vote = get(userId, dateTimeToday());
         if(vote == null) {
-            vote = new Vote(null, DateTimeUtil.dateTimeToday());
+            vote = new Vote(null, dateTimeToday());
             vote.setRestaurant(restaurantRepository.getOne(restaurantId));
             vote.setUser(userRepository.getOne(userId));
             return voteRepository.save(vote);
         }
-        if (DateTimeUtil.dateTimeToday().compareTo(TEST_TIME) > 0) {
-            throw new NotFoundException("Voting is after 11:00 then it is too late, vote can't be changed");
+        if (dateTimeToday().compareTo(TEST_TIME) > 0) {
+            throw new NotFoundException("Change restaurant to vote is after 11:00 then it is too late, vote can't be changed");
         }
         if(vote.getUser().getId() == userId && vote.getRestaurant().getId() == restaurantId) {
             voteRepository.deleteByIdAndUserId(vote.getId(), userId);

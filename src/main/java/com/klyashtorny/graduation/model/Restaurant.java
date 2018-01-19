@@ -9,7 +9,7 @@ import java.util.Date;
 public class Restaurant extends AbstractNamedEntity {
 
     @Column(name = "address", nullable = false)
-    private String Address;
+    private String address;
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
     @NotNull
@@ -25,15 +25,15 @@ public class Restaurant extends AbstractNamedEntity {
 
     public Restaurant(Integer id, String name, String address) {
         super(id, name);
-        Address = address;
+        this.address = address;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
+        this.address = address;
     }
 
     public Date getRegistered() {
@@ -57,7 +57,7 @@ public class Restaurant extends AbstractNamedEntity {
         return "Restaurant{" +
                 "id=" + id +
                 ", name=" + name +
-                ", Address=" + Address +
+                ", address=" + address +
                 ", registered=" + registered +
                 '}';
     }

@@ -20,6 +20,8 @@ public interface UserService  {
 
     void update(UserTo user);
 
+    void enable(int id, boolean enable);
+
     List<User> getAll();
 
 }

@@ -17,8 +17,8 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     public void delete() throws Exception {
-        service.delete(RESTAURANT_ID, USER_2.getId());
-        assertMatch(service.getAllByUser(USER_2.getId()), RESTAURANT_2);
+        service.delete(RESTAURANT_ID, ADMIN_1.getId());
+        assertMatch(service.getAllByUser(ADMIN_1.getId()), RESTAURANT_2);
     }
 
     @Test
@@ -30,40 +30,40 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     public void create() throws Exception {
         Restaurant created = getCreated();
-        service.create(created, USER_ID);
-        assertMatch(service.getAll(), RESTAURANT_1, RESTAURANT_2, created, RESTAURANT_3, RESTAURANT_4);
-    }
+        service.create(created, ADMIN_1.getId());
+        assertMatch(service.getAll(), RESTAURANT_3, RESTAURANT_4, created, RESTAURANT_1, RESTAURANT_2);
+}
 
     @Test
     public void update() throws Exception {
         Restaurant updated = getUpdated();
-        service.update(updated, USER_2.getId());
-        assertMatch(service.get(RESTAURANT_ID, USER_2.getId()), updated);
+        service.update(updated, ADMIN_1.getId());
+        assertMatch(service.get(RESTAURANT_ID, ADMIN_1.getId()), updated);
     }
 
     @Test
     public void updateNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
         thrown.expectMessage("Not found entity with id=" + RESTAURANT_ID);
-        service.update(RESTAURANT_1, USER_ID);
+        service.update(RESTAURANT_1, ADMIN_2.getId());
     }
 
     @Test
     public void get() throws Exception {
-        Restaurant restaurant = service.get(RESTAURANT_ID, USER_2.getId());
+        Restaurant restaurant = service.get(RESTAURANT_ID, ADMIN_1.getId());
         assertMatch(restaurant, RESTAURANT_1);
     }
 
     @Test
     public void testGetNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        service.get(RESTAURANT_ID, USER_ID);
+        service.get(RESTAURANT_ID, ADMIN_2.getId());
     }
 
     @Test
     public void testGetAllByUser() throws Exception {
-        List<Restaurant> all = service.getAllByUser(USER_2.getId());
-        assertMatch(all, RESTAURANTS_USER_2);
+        List<Restaurant> all = service.getAllByUser(ADMIN_1.getId());
+        assertMatch(all, RESTAURANTS_ADMIN_1);
     }
 
     @Test

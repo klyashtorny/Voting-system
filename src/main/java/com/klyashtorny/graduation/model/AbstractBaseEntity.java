@@ -1,10 +1,12 @@
 package com.klyashtorny.graduation.model;
 
+import com.klyashtorny.graduation.to.HasId;
+
 import javax.persistence.*;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class AbstractBaseEntity {
+public abstract class AbstractBaseEntity implements HasId {
     public static final int START_SEQ = 100000;
 
     @Id
@@ -18,17 +20,19 @@ public abstract class AbstractBaseEntity {
 
     public AbstractBaseEntity() {
     }
-
-    public boolean isNew() {
-        return this.id == null;
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return String.format("Entity %s (%s)", getClass().getName(), id);
     }
 
     @Override

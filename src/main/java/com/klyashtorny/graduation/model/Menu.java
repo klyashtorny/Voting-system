@@ -1,5 +1,6 @@
 package com.klyashtorny.graduation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Menu extends AbstractNamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
     @OrderBy("name asc")
+    @JsonIgnore
     protected List<Dish> dishes;
 
     public Menu() {

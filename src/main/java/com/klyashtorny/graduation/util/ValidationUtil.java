@@ -35,12 +35,12 @@ public class ValidationUtil {
         }
     }
 
-    public static void assureIdConsistent(HasId bean, int id) {
+    public static void assureIdConsistent(AbstractBaseEntity entity, int id) {
 //      http://stackoverflow.com/a/32728226/548473
-        if (bean.isNew()) {
-            bean.setId(id);
-        } else if (bean.getId() != id) {
-            throw new IllegalArgumentException(bean + " must be with id=" + id);
+        if (entity.isNew()) {
+            entity.setId(id);
+        } else if (entity.getId() != id) {
+            throw new IllegalArgumentException(entity + " must be with id=" + id);
         }
     }
 

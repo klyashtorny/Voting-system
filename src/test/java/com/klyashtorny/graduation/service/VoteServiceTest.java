@@ -14,6 +14,7 @@ import static com.klyashtorny.graduation.UserTestData.*;
 import static com.klyashtorny.graduation.VoteTestData.*;
 import static com.klyashtorny.graduation.VoteTestData.getUpdated;
 import static com.klyashtorny.graduation.VoteTestData.getCreated;
+import static com.klyashtorny.graduation.util.DateTimeUtil.today;
 
 public class VoteServiceTest extends AbstractServiceTest {
 
@@ -27,7 +28,7 @@ public class VoteServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testGetAllByRestaurantToday() throws Exception {
+    public void testGetAllByRestaurant() throws Exception {
         List<Vote> all = voteService.getAllByRestaurantAndDate(RESTAURANT_4.getId(), LocalDateTime.of(2018, 01, 7, 9, 00, 00));
         assertMatch(all, VOTE_6, VOTE_7);
     }
@@ -35,40 +36,33 @@ public class VoteServiceTest extends AbstractServiceTest {
     @Test
     public void save() throws Exception {
         Vote created = getCreated();
-        voteService.save(USER_4.getId(), RESTAURANT_ID);
+        voteService.save(USER_4.getId(), RESTAURANT_1.getId());
         assertMatch(voteService.getAllByRestaurantAndDate(RESTAURANT_ID, LocalDateTime.now()), VOTE_1, VOTE_2, VOTE_3, created);
     }
 
     @Test
     public void updateBefore1100() throws Exception {
-        DateTimeUtil.testFixedTime(LocalDateTime.of(2018, 1, 15, 10, 1));
+        DateTimeUtil.testFixedTime(today().atTime(9, 20));
         Vote updated = getUpdated();
-        voteService.save(USER_ID, RESTAURANT_2.getId());
-        voteService.save(USER_2.getId(), RESTAURANT_2.getId());
-        voteService.save(USER_3.getId(), RESTAURANT_2.getId());
+        voteService.save(ADMIN_1.getId(), RESTAURANT_2.getId());
+        voteService.save(ADMIN_2.getId(), RESTAURANT_2.getId());
+        voteService.save(USER_1.getId(), RESTAURANT_2.getId());
         assertMatch(voteService.getAllByRestaurantAndDate(RESTAURANT_2.getId(), LocalDateTime.now()), updated, VOTE_2, VOTE_3);
     }
 
     @Test
-    public void notVoteToUpdate() throws Exception {
-        thrown.expect(NotFoundException.class);
-        thrown.expectMessage("Voting is after 11:00 then it is too late, vote can't be changed");
-        voteService.save(USER_ID, RESTAURANT_2.getId());
-    }
-
-    @Test
     public void reVoteDeleted() throws Exception {
-        DateTimeUtil.testFixedTime(LocalDateTime.of(2018, 1, 15, 10, 1));
-        voteService.save(USER_ID, RESTAURANT_ID);
-        assertMatch(voteService.getAllByRestaurantAndDate(RESTAURANT_ID, LocalDateTime.now()), VOTE_2, VOTE_3);
+        DateTimeUtil.testFixedTime(today().atTime(9, 20));
+        voteService.save(USER_1.getId(), RESTAURANT_1.getId());
+        assertMatch(voteService.getAllByRestaurantAndDate(RESTAURANT_1.getId(), LocalDateTime.now()), VOTE_1, VOTE_2);
     }
 
     @Test
     public void updateAfter1100() throws Exception {
-        DateTimeUtil.testFixedTime(LocalDateTime.of(2018, 1, 15, 11, 20));
+        DateTimeUtil.testFixedTime(today().atTime(11, 20));
         thrown.expect(NotFoundException.class);
-        thrown.expectMessage("Voting is after 11:00 then it is too late, vote can't be changed");
-        voteService.save(USER_ID, RESTAURANT_2.getId());
+        thrown.expectMessage("Change restaurant to vote is after 11:00 then it is too late, vote can't be changed");
+        voteService.save(USER_1.getId(), RESTAURANT_1.getId());
     }
 
 }
