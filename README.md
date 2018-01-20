@@ -14,7 +14,11 @@ Build a voting system for deciding where to have lunch.
 - If it is after 11:00 then it is too late, vote can't be changed
 - Each restaurant provides new menu each day.
 
-CURL:
+HSQLDB
+User: sa, no password
+JDBC URL: jdbc:hsqldb:mem:graduate
+
+Couple curl commands to test it:
 
 USERS
 GetAll
@@ -27,6 +31,7 @@ Delete
 curl -s -X DELETE http://localhost:8080/topjava-graduation/rest/admin/users/100002 --user admin1@gmail.com:admin1
 
 VOTE
+
 GetAll(current)
 curl -s http://localhost:8080/topjava-graduation/rest/restaurants --user user1@yandex.ru:password1
 
@@ -100,3 +105,5 @@ curl -s -X PUT -d '{"name": "Update Dish","price":"180"}' -H 'Content-Type: appl
 
 Delete
 curl -s -X DELETE http://localhost:8080/topjava-graduation/rest/profile/restaurants/menu/100012/dish/100017 --user admin1@gmail.com:admin1
+
+http://javaops.ru/

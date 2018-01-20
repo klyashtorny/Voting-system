@@ -39,6 +39,7 @@ abstract public class AbstractServiceTest {
     @Before
     public void setUp() throws Exception {
         cacheManager.getCache("users").clear();
+        cacheManager.getCache("vote").clear();
         cacheManager.getCache("menu").clear();
         jpaUtil.clear2ndLevelHibernateCache();
     }
