@@ -1,14 +1,13 @@
 package com.klyashtorny.graduation.service;
 
-import com.klyashtorny.graduation.model.Menu;
 import com.klyashtorny.graduation.model.Vote;
-import com.klyashtorny.graduation.repository.MenuRepository;
 import com.klyashtorny.graduation.repository.RestaurantRepository;
 import com.klyashtorny.graduation.repository.UserRepository;
 import com.klyashtorny.graduation.repository.VoteRepository;
-import com.klyashtorny.graduation.util.DateTimeUtil;
 import com.klyashtorny.graduation.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,7 +15,6 @@ import java.util.List;
 
 import static com.klyashtorny.graduation.util.DateTimeUtil.TEST_TIME;
 import static com.klyashtorny.graduation.util.DateTimeUtil.dateTimeToday;
-import static com.klyashtorny.graduation.util.DateTimeUtil.today;
 import static com.klyashtorny.graduation.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -28,22 +26,19 @@ public class VoteServiceImpl implements VoteService {
 
     private final RestaurantRepository restaurantRepository;
 
-    private final MenuRepository menuRepository;
 
     @Autowired
     public VoteServiceImpl(VoteRepository voteRepository, UserRepository userRepository,
-                           RestaurantRepository restaurantRepository, MenuRepository menuRepository) {
+                           RestaurantRepository restaurantRepository) {
         this.voteRepository = voteRepository;
         this.userRepository = userRepository;
         this.restaurantRepository = restaurantRepository;
-        this.menuRepository = menuRepository;
     }
 
+    @CacheEvict(value = "vote", allEntries = true)
     @Override
     public Vote save(int userId, int restaurantId) {
-        Menu menu = menuRepository.getWithDishes(restaurantId, today()).orElse(null);
-        if(menu == null) throw new  NotFoundException("Menu is not existing");
-        if(menu.getDishes().size()==0) throw new  NotFoundException("Dish list for menu is empty");
+
         Vote vote = get(userId, dateTimeToday());
         if(vote == null) {
             vote = new Vote(null, dateTimeToday());
@@ -62,22 +57,26 @@ public class VoteServiceImpl implements VoteService {
         return voteRepository.save(vote);
     }
 
+    @CacheEvict(value = "vote", allEntries = true)
     @Override
     public void delete(int id, int userId) throws NotFoundException {
         checkNotFoundWithId(voteRepository.deleteByIdAndUserId(id, userId)!=0, id);
     }
 
+    @Cacheable("vote")
     @Override
     public Vote get(int userId, LocalDateTime dateTime) {
        return voteRepository.getByUserIdAndDate(userId, dateTime).orElse(null);
     }
 
+    @Cacheable("vote")
     @Override
     public List<Vote> getAllByDate(LocalDateTime date) {
         return voteRepository.findAllByVoteTime(date);
     }
 
-
+    @Cacheable("vote")
+    @Override
     public List<Vote> getAllByRestaurantAndDate(int restaurantId, LocalDateTime date) {
         return voteRepository.findAllByRestaurantIdAndDate(restaurantId, date);
     }

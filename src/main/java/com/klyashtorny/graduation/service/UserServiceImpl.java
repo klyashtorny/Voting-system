@@ -8,6 +8,7 @@ import com.klyashtorny.graduation.util.UserUtil;
 import com.klyashtorny.graduation.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -61,6 +62,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
+    @Cacheable("users")
     @Override
     public List<User> getAll() {
         return repository.findAll(SORT_NAME_EMAIL);

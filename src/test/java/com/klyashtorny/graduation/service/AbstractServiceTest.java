@@ -33,8 +33,13 @@ abstract public class AbstractServiceTest {
     @Autowired
     protected JpaUtil jpaUtil;
 
+    @Autowired
+    private CacheManager cacheManager;
+
     @Before
     public void setUp() throws Exception {
+        cacheManager.getCache("users").clear();
+        cacheManager.getCache("menu").clear();
         jpaUtil.clear2ndLevelHibernateCache();
     }
 

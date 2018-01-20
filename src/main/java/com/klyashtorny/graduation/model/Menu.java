@@ -1,6 +1,7 @@
 package com.klyashtorny.graduation.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -8,7 +9,9 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.annotations.Cache;
 
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "menu", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "registered"}, name = "menu_unique_restaurant_id_registered_idx")})
 public class Menu extends AbstractNamedEntity {
@@ -23,6 +26,7 @@ public class Menu extends AbstractNamedEntity {
     @NotNull
     private Restaurant restaurant;
 
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
     @OrderBy("name asc")
     @JsonIgnore

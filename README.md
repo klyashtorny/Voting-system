@@ -27,15 +27,22 @@ Delete
 curl -s -X DELETE http://localhost:8080/topjava-graduation/rest/admin/users/100002 --user admin1@gmail.com:admin1
 
 VOTE
-GetAll
+GetAll(current)
 curl -s http://localhost:8080/topjava-graduation/rest/restaurants --user user1@yandex.ru:password1
+
+GetAllByDate(history)
+curl -s http://localhost:8080/topjava-graduation/rest/restaurants/history?dateTime=2018-01-07 --user user1@yandex.ru:password1
+curl -s http://localhost:8080/topjava-graduation/rest/restaurants/history?dateTime=2018-01-06 --user user1@yandex.ru:password1
+
 GetByRestaurants
 curl -s http://localhost:8080/topjava-graduation/rest/restaurants/100008/votes --user admin1@gmail.com:admin1
+curl -s http://localhost:8080/topjava-graduation/rest/restaurants/100009/votes --user admin2@gmail.com:admin2
+
 Post
+curl -s -X POST -d -H http://localhost:8080/topjava-graduation/rest/restaurants/100009/vote --user user3@yandex.ru:password3
 curl -s -X POST -d -H http://localhost:8080/topjava-graduation/rest/restaurants/100009/vote --user user4@yandex.ru:password4
 curl -s -X POST -d -H http://localhost:8080/topjava-graduation/rest/restaurants/100009/vote --user user5@yandex.ru:password5
 curl -s -X POST -d -H http://localhost:8080/topjava-graduation/rest/restaurants/100009/vote --user user6@yandex.ru:password6
-curl -s -X POST -d -H http://localhost:8080/topjava-graduation/rest/restaurants/100009/vote --user user7@yandex.ru:password7
 
 RESTAURANT
 

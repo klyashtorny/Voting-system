@@ -5,6 +5,7 @@ import com.klyashtorny.graduation.repository.DishRepository;
 import com.klyashtorny.graduation.repository.MenuRepository;
 import com.klyashtorny.graduation.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 

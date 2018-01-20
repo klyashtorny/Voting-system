@@ -5,6 +5,7 @@ import com.klyashtorny.graduation.repository.MenuRepository;
 import com.klyashtorny.graduation.repository.RestaurantRepository;
 import com.klyashtorny.graduation.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -25,7 +26,7 @@ public class MenuServiceImpl implements MenuService {
         this.repository = repository;
         this.restaurantRepository = restaurantRepository;
     }
-
+    @Cacheable("menu")
     @Override
     public List<Menu> getAllByRestaurant(int restaurantId) {
         return repository.getByRestaurantIdOrderByName(restaurantId);
@@ -48,6 +49,7 @@ public class MenuServiceImpl implements MenuService {
         return checkNotFoundWithId (repository.getByIdAndRestaurantId(id, restaurantId), id);
     }
 
+    @Cacheable("menu")
     @Override
     public Menu getActualWithDishes(int restaurantId, LocalDate date) throws NotFoundException {
         return checkNotFoundWithId(repository.getWithDishes(restaurantId, date).orElse(null), restaurantId);
