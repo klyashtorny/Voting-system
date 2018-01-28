@@ -1,6 +1,7 @@
 package com.klyashtorny.graduation.service;
 
 import com.klyashtorny.graduation.model.Dish;
+import com.klyashtorny.graduation.util.exception.ErrorType;
 import com.klyashtorny.graduation.util.exception.NotFoundException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import static com.klyashtorny.graduation.DishTestData.*;
 import static com.klyashtorny.graduation.DishTestData.getCreated;
 import static com.klyashtorny.graduation.DishTestData.getUpdated;
 import static com.klyashtorny.graduation.MenuTestData.*;
+import static org.hamcrest.core.StringContains.containsString;
 
 public class DishServiceTest extends AbstractServiceTest {
 
@@ -64,7 +66,9 @@ public class DishServiceTest extends AbstractServiceTest {
     @Test
     public void updateNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        thrown.expectMessage("Not found entity with id=" + DISH_ID);
+        thrown.expectMessage(containsString(ErrorType.DATA_NOT_FOUND.name()));
+        thrown.expectMessage(containsString(NotFoundException.NOT_FOUND_EXCEPTION));
+        thrown.expectMessage(containsString(String.valueOf(DISH_ID)));
         dishService.update(DISH_1, MENU_3.getId());
     }
 

@@ -2,7 +2,6 @@ package com.klyashtorny.graduation.util;
 
 
 import com.klyashtorny.graduation.model.AbstractBaseEntity;
-import com.klyashtorny.graduation.to.HasId;
 import com.klyashtorny.graduation.util.exception.NotFoundException;
 
 public class ValidationUtil {
@@ -23,9 +22,9 @@ public class ValidationUtil {
         return object;
     }
 
-    public static void checkNotFound(boolean found, String msg) {
+    public static void checkNotFound(boolean found, String arg) {
         if (!found) {
-            throw new NotFoundException("Not found entity with " + msg);
+            throw new NotFoundException(arg);
         }
     }
 

@@ -2,16 +2,19 @@ package com.klyashtorny.graduation;
 
 import com.klyashtorny.graduation.model.Role;
 import com.klyashtorny.graduation.model.User;
+import com.klyashtorny.graduation.web.json.JsonUtil;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static com.klyashtorny.graduation.web.json.JsonUtil.writeIgnoreProps;
 import static org.assertj.core.api.Assertions.assertThat;
 import static com.klyashtorny.graduation.model.AbstractBaseEntity.START_SEQ;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 public class UserTestData {
     public static final int USER_ID = START_SEQ;
-    public static final int ADMIN_ID = START_SEQ + 7;
 
     public static final User ADMIN_1 = new User(USER_ID, "Admin1", "admin1@gmail.com", "admin1", Role.ROLE_ADMIN);
     public static final User ADMIN_2 = new User(USER_ID + 1, "Admin2", "admin2@gmail.com", "admin2", Role.ROLE_ADMIN);
@@ -34,5 +37,15 @@ public class UserTestData {
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("registered", "password").isEqualTo(expected);
+    }
+    public static ResultMatcher contentJson(User... expected) {
+        return content().json(writeIgnoreProps(Arrays.asList(expected), "registered", "password"));
+    }
+
+    public static ResultMatcher contentJson(User expected) {
+        return content().json(writeIgnoreProps(expected, "registered", "password"));
+    }
+    public static String jsonWithPassword(User user, String passw) {
+        return JsonUtil.writeAdditionProps(user, "password", passw);
     }
 }
