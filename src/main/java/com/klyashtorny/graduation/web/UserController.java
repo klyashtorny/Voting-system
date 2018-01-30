@@ -1,5 +1,6 @@
 package com.klyashtorny.graduation.web;
 
+import com.klyashtorny.graduation.View;
 import com.klyashtorny.graduation.model.User;
 import com.klyashtorny.graduation.service.UserService;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -42,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
+    public ResponseEntity<User> createWithLocation(@Validated(View.Web.class)@RequestBody User user) {
         log.info("create {}", user);
         checkNew(user);
         User created = service.create(user);
@@ -57,7 +59,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody User user, @PathVariable("id") int id) {
+    public void update(@Validated(View.Web.class) @RequestBody User user, @PathVariable("id") int id) {
         log.info("update {} with id={}", user, id);
         assureIdConsistent(user, id);
         service.update(user);
@@ -69,7 +71,6 @@ public class UserController {
         log.info("delete {}", id);
         service.delete(id);
     }
-
 
     @GetMapping(value = "/by", produces = MediaType.APPLICATION_JSON_VALUE)
     public User getByMail(@RequestParam("email") String email) {

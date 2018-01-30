@@ -1,5 +1,8 @@
 package com.klyashtorny.graduation.model;
 
+import com.klyashtorny.graduation.View;
+import org.hibernate.validator.constraints.SafeHtml;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
@@ -11,6 +14,7 @@ public abstract class AbstractNamedEntity extends AbstractBaseEntity {
     @NotNull
     @Size(min = 2, max = 100)
     @Column(name = "name", nullable = false)
+    @SafeHtml(groups = {View.Web.class})
     protected String name;
 
     public AbstractNamedEntity() {

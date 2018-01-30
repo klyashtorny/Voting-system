@@ -3,6 +3,7 @@ package com.klyashtorny.graduation.web;
 import com.klyashtorny.graduation.util.exception.ErrorType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -32,17 +33,6 @@ import static com.klyashtorny.graduation.util.exception.ErrorType.*;
 public class ExceptionInfoHandler {
     private static Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
-    public static final String EXCEPTION_DUPLICATE_EMAIL = "exception.user.duplicateEmail";
-    public static final String EXCEPTION_DUPLICATE_DATETIME = "exception.meal.duplicateDateTime";
-
-    private static final Map<String, String> CONSTRAINS_I18N_MAP = Collections.unmodifiableMap(
-            new HashMap<String, String>() {
-                {
-                    put("users_unique_email_idx", EXCEPTION_DUPLICATE_EMAIL);
-                    put("meals_unique_user_datetime_idx", EXCEPTION_DUPLICATE_DATETIME);
-                }
-            });
-
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorInfo> applicationError(HttpServletRequest req, ApplicationException appEx) {
         ErrorInfo errorInfo = logAndGetErrorInfo(req, appEx, false, appEx.getType());
@@ -54,13 +44,7 @@ public class ExceptionInfoHandler {
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
         String rootMsg = ValidationUtil.getRootCause(e).getMessage();
         if (rootMsg != null) {
-            String lowerCaseMsg = rootMsg.toLowerCase();
-            Optional<Map.Entry<String, String>> entry = CONSTRAINS_I18N_MAP.entrySet().stream()
-                    .filter(it -> lowerCaseMsg.contains(it.getKey()))
-                    .findAny();
-            if (entry.isPresent()) {
                 return logAndGetErrorInfo(req, e, false, DATA_ERROR);
-            }
         }
         return logAndGetErrorInfo(req, e, true, DATA_ERROR);
     }
@@ -72,6 +56,7 @@ public class ExceptionInfoHandler {
                 ((BindException) e).getBindingResult() : ((MethodArgumentNotValidException) e).getBindingResult();
 
         String[] details = result.getFieldErrors().stream()
+                .map(fieldError -> fieldError.getField())
                 .toArray(String[]::new);
 
         return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR, details);

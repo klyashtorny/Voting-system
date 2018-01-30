@@ -1,7 +1,10 @@
 package com.klyashtorny.graduation.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.klyashtorny.graduation.View;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.util.CollectionUtils;
 import org.hibernate.annotations.Cache;
 
@@ -21,11 +24,13 @@ public class User extends AbstractNamedEntity {
     @Email
     @NotBlank
     @Size(max = 100)
+    @SafeHtml(groups = {View.Web.class})
     private String email;
 
     @Column(name = "password", nullable = false)
     @NotBlank
     @Size(min = 6, max = 100)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
