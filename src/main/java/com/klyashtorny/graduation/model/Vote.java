@@ -1,13 +1,9 @@
 package com.klyashtorny.graduation.model;
 
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import org.hibernate.annotations.Cache;
 
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "vote")
 public class Vote extends AbstractBaseEntity {

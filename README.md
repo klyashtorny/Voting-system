@@ -137,5 +137,3 @@ curl -s -X PUT -d '{"name": "Update Dish","price":"180"}' -H 'Content-Type: appl
 Delete
 
 curl -s -X DELETE http://localhost:8080/topjava-graduation/rest/profile/restaurants/menu/100012/dish/100017 --user admin1@gmail.com:admin1
-
-http://javaops.ru/

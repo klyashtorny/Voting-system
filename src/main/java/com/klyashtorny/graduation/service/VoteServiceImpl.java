@@ -6,8 +6,6 @@ import com.klyashtorny.graduation.repository.UserRepository;
 import com.klyashtorny.graduation.repository.VoteRepository;
 import com.klyashtorny.graduation.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,7 +33,6 @@ public class VoteServiceImpl implements VoteService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    @CacheEvict(value = "vote", allEntries = true)
     @Override
     public Vote save(int userId, int restaurantId) {
 
@@ -57,25 +54,21 @@ public class VoteServiceImpl implements VoteService {
         return voteRepository.save(vote);
     }
 
-    @CacheEvict(value = "vote", allEntries = true)
     @Override
     public void delete(int id, int userId) throws NotFoundException {
         checkNotFoundWithId(voteRepository.deleteByIdAndUserId(id, userId)!=0, id);
     }
 
-    @Cacheable("vote")
     @Override
     public Vote get(int userId, LocalDateTime dateTime) {
        return voteRepository.getByUserIdAndDate(userId, dateTime).orElse(null);
     }
 
-    @Cacheable("vote")
     @Override
     public List<Vote> getAllByDate(LocalDateTime date) {
         return voteRepository.findAllByVoteTime(date);
     }
 
-    @Cacheable("vote")
     @Override
     public List<Vote> getAllByRestaurantAndDate(int restaurantId, LocalDateTime date) {
         return voteRepository.findAllByRestaurantIdAndDate(restaurantId, date);
